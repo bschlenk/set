@@ -41,6 +41,7 @@ export function App() {
       ) : (
         <Button onClick={handleDeclare}>Set!</Button>
       )}
+      <span>Score: {sets.length}</span>
     </div>
   );
 }
