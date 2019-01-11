@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Board } from './components/Board';
 import { Button } from './components/Button';
-import { useAppState, Mode } from './state/useAppState';
 import { Card } from './model/card';
+import { useSetMachine } from './state/useSetMachine';
 import './App.css';
 
 const instructions = (
@@ -12,34 +12,34 @@ const instructions = (
 );
 
 export function App() {
-  const appState = useAppState();
-  const cards = appState.state.deck.value.slice(0, 12);
+  const machine = useSetMachine();
 
-  const handleSet = () => {
-    appState.startChoosing();
-  };
+  useEffect(() => {
+    machine.service.start();
+  }, []);
+
+  const { board, declaredCards, sets } = machine.context;
+  const declaring = machine.state.matches('game.declaring');
+
+  const handleDeclare = () => machine.send('DECLARE');
 
   const handleClick = (card: Card) => {
-    if (appState.state.mode === Mode.CHOOSING) {
-      if (appState.state.chosen.value.includes(card)) {
-        appState.removeCard(card);
+    if (declaring) {
+      if (declaredCards.includes(card)) {
+        machine.send({ type: 'REMOVE_CARD', card });
       } else {
-        appState.addCard(card);
+        machine.send({ type: 'ADD_CARD', card });
       }
     }
   };
 
   return (
     <div className="App">
-      <Board
-        cards={cards}
-        selected={appState.state.chosen.value}
-        onClick={handleClick}
-      />
-      {appState.state.mode === Mode.CHOOSING ? (
+      <Board cards={board} selected={declaredCards} onClick={handleClick} />
+      {declaring ? (
         <Button disabled>Click the cards!</Button>
       ) : (
-        <Button onClick={handleSet}>Set!</Button>
+        <Button onClick={handleDeclare}>Set!</Button>
       )}
     </div>
   );
