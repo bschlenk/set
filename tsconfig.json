@@ -15,7 +15,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"

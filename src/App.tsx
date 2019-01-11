@@ -1,28 +1,46 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { Board } from './components/Board';
+import { Button } from './components/Button';
+import { useAppState, Mode } from './hooks/useAppState';
+import { Card } from './model/card';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const instructions = (
+  <a href="http://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf">
+    Instructions
+  </a>
+);
 
-export default App;
+export function App() {
+  const appState = useAppState();
+  const cards = appState.state.deck.value.slice(0, 12);
+
+  const handleSet = () => {
+    appState.startChoosing();
+  };
+
+  const handleClick = (card: Card) => {
+    if (appState.state.mode === Mode.CHOOSING) {
+      if (appState.state.chosen.value.includes(card)) {
+        appState.removeCard(card);
+      } else {
+        appState.addCard(card);
+      }
+    }
+  };
+
+  return (
+    <div className="App">
+      <Board
+        cards={cards}
+        selected={appState.state.chosen.value}
+        onClick={handleClick}
+      />
+      {appState.state.mode === Mode.CHOOSING ? (
+        <Button disabled>Click the cards!</Button>
+      ) : (
+        <Button onClick={handleSet}>Set!</Button>
+      )}
+    </div>
+  );
+}

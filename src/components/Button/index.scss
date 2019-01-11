@@ -1,0 +1,26 @@
+$color: #70a6ff;
+$shadow: darken($color, 20%);
+
+.Button {
+  background-color: $color;
+  color: white;
+  display: inline-block;
+  font-size: 2rem;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  outline: none;
+  box-shadow: 0 4px $shadow;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px $shadow;
+  }
+
+  &:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px $shadow;
+  }
+}

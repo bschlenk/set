@@ -1,0 +1,65 @@
+$color: white;
+$shadow: darken($color, 60%);
+
+.Card {
+  position: relative;
+
+  &__RatioBox {
+    border-radius: 5%;
+    background-color: $color;
+    position: relative;
+    box-shadow: 0 4px $shadow;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px $shadow;
+    }
+
+    &:active {
+      transform: translateY(-2px);
+      box-shadow: 0 6px $shadow;
+    }
+
+    &:before {
+      content: '';
+      width: 1px;
+      margin-left: -1px;
+      float: left;
+      height: 0;
+      // 25:35 aspect ratio
+      padding-top: 35px / 25px * 100%;
+    }
+
+    &:after {
+      /* to clear float */
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+
+  &__Shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  svg {
+    width: 75%;
+  }
+}
+
+.Card--selected .Card__Shapes:after {
+  content: '★';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #eec12b;
+}

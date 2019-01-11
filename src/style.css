@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#display {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #EEE;
+}
+
+.card {
+    float: left;
+    width: 25%;
+    height: 33.33%;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 20px #666;
+}
+
+.active {
+    box-shadow: 0px 0px 20px #999;
+}
+
+.card > span {
+    display: block;
+}
+
+.shape-squiggle {
+    border-radius: 0px;
+}
+
+.shape-triangle {
+    border-radius: 30px;
+}
+
+.shape-oval {
+    border-radius: 100%;
+}
+
+.color-green {
+    color: #0F1;
+}
+
+.color-red {
+    color: #F45;
+}
+
+.color-purple {
+    color: #74C;
+}
+
+.shade-empty {
+    border: 1px double #bbb;
+}
+
+.shade-shaded {
+    border-style: dashed;
+}
+
+.shade-filled {
+    border-style: solid;
+}
+
+.count-one:before {
+    content: "1";
+    position: absolute;
+    font-size: 350%;
+    margin-top: 20px;
+    margin-left: -13px;
+}
+
+.count-two:before {
+    content: "2";
+    position: absolute;
+    font-size: 350%;
+    margin-top: 20px;
+    margin-left: -13px;
+}
+
+.count-three:before {
+    content: "3";
+    position: absolute;
+    font-size: 350%;
+    margin-top: 20px;
+    margin-left: -13px;
+}
