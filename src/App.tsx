@@ -1,7 +1,7 @@
 import React from 'react';
 import { Board } from './components/Board';
 import { Button } from './components/Button';
-import { useAppState, Mode } from './hooks/useAppState';
+import { useAppState, Mode } from './state/useAppState';
 import { Card } from './model/card';
 import './App.css';
 

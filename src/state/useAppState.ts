@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Card } from '../model/card';
 import { createDeck } from '../utils/createDeck';
-import { useArray } from './useArray';
+import { useArray } from '../hooks/useArray';
 import { isSet } from '../utils/isSet';
 
 const SECONDS_TO_CHOOSE = 3;
