@@ -1,0 +1,17 @@
+.Timer {
+  font-family: 'Lucida Console', Monaco, monospace;
+  width: 1.2em;
+  display: inline-flex;
+  justify-content: center;
+  animation: 1.2s linear TimerShrink;
+}
+
+@keyframes TimerShrink {
+  from {
+    transform: scale(1.5);
+  }
+
+  to {
+    transform: scale(0.7);
+  }
+}

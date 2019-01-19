@@ -3,6 +3,7 @@ import { Board } from './components/Board';
 import { Button } from './components/Button';
 import { Card } from './model/card';
 import { useSetMachine } from './state/useSetMachine';
+import { TimerButton } from './components/TimerButton';
 import './App.css';
 
 const instructions = (
@@ -18,7 +19,7 @@ export function App() {
     machine.service.start();
   }, []);
 
-  const { board, declaredCards, sets } = machine.context;
+  const { board, declaredCards, sets, countdown } = machine.context;
   const declaring = machine.state.matches('game.declaring');
 
   const handleDeclare = () => machine.send('DECLARE');
@@ -37,7 +38,9 @@ export function App() {
     <div className="App">
       <Board cards={board} selected={declaredCards} onClick={handleClick} />
       {declaring ? (
-        <Button disabled>Click the cards!</Button>
+        <TimerButton disabled time={countdown}>
+          Click the cards!
+        </TimerButton>
       ) : (
         <Button onClick={handleDeclare}>Set!</Button>
       )}
