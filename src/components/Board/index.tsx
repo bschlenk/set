@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card as CardModel } from '../../model/card';
 import { Card } from '../Card';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './index.scss';
 
 export interface BoardProps {
@@ -9,24 +10,35 @@ export interface BoardProps {
   selected: CardModel[];
 }
 
+const getCssTransitionNames = (prefix: string) => ({
+  enter: `${prefix}--enter`,
+  enterActive: `${prefix}--enter-active`,
+  exit: `${prefix}--exit`,
+});
+
 export function Board({ cards, onClick, selected }: BoardProps) {
   return (
     <div className="Board">
-      <div className="Board__Inner">
+      <TransitionGroup className="Board__Inner">
         {cards.map(card => {
           const cardId = card.getId();
           const isSelected = selected.includes(card);
           return (
-            <button
+            <CSSTransition
               key={cardId}
-              onClick={() => onClick(card)}
-              className="Board__CardButton"
+              timeout={200}
+              classNames={getCssTransitionNames('Board__CardButton')}
             >
-              <Card selected={isSelected} {...card} />
-            </button>
+              <button
+                onClick={() => onClick(card)}
+                className="Board__CardButton"
+              >
+                <Card selected={isSelected} {...card} />
+              </button>
+            </CSSTransition>
           );
         })}
-      </div>
+      </TransitionGroup>
     </div>
   );
 }
