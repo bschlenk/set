@@ -2,7 +2,7 @@ import { actions, MachineConfig, MachineOptions } from 'xstate';
 import { Card } from '../model/card';
 import { isSet } from '../utils/isSet';
 import { createDeck } from '../utils/createDeck';
-import { TOTAL_CARDS } from '../variables';
+import { drawCards } from '../utils/drawCards';
 const { assign } = actions;
 
 const SECONDS_TO_CHOOSE = 3;
@@ -132,12 +132,12 @@ export const machineOptions: MachineOptions<Context, Event> = {
   actions: {
     newGame: assign<Context>(ctx => {
       const freshDeck = createDeck();
-      const board = freshDeck.slice(0, 12);
-      const deck = freshDeck.slice(12);
+      const [board, deck] = drawCards(freshDeck, 12);
+
       return {
         ...ctx,
-        deck,
         board,
+        deck,
       };
     }),
 
