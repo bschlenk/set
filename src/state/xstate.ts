@@ -40,7 +40,6 @@ type Event = DeclareEvent | AddCardEvent | RemoveCardEvent;
 interface Context {
   deck: Card[];
   board: Card[];
-  declaring: boolean;
   declaredCards: Card[];
   sets: Card[][];
   countdown: number;
@@ -49,7 +48,6 @@ interface Context {
 export const initialContext: Context = {
   deck: [],
   board: [],
-  declaring: false,
   declaredCards: [],
   sets: [],
   countdown: 0,
@@ -145,13 +143,11 @@ export const machineOptions: MachineOptions<Context, Event> = {
 
     setDeclaring: assign<Context>(ctx => ({
       ...ctx,
-      declaring: true,
       declaredCards: [],
     })),
 
     setIdle: assign<Context>(ctx => ({
       ...ctx,
-      declaring: false,
       declaredCards: [],
     })),
 
