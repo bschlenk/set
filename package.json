@@ -2,6 +2,13 @@
   "name": "set",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "lint": "tslint -p . -t stylish",
+    "deploy": "./scripts/deploy.sh"
+  },
   "dependencies": {
     "@types/jest": "23.3.11",
     "@types/node": "10.12.18",
@@ -13,15 +20,13 @@
     "react-dom": "^16.7.0-alpha.2",
     "react-scripts": "2.1.2",
     "react-transition-group": "^2.5.3",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "tslint-react": "^3.6.0",
     "typescript": "3.2.2",
     "use-machine": "^1.0.0",
     "xstate": "^4.2.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "deploy": "./scripts/deploy.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
