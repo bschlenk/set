@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Board } from './components/Board';
 import { Button } from './components/Button';
 import { Card } from './model/card';
@@ -14,10 +14,6 @@ const instructions = (
 
 export function App() {
   const machine = useSetMachine();
-
-  useEffect(() => {
-    machine.service.start();
-  }, []);
 
   const { board, declaredCards, sets, countdown } = machine.context;
   const declaring = machine.state.matches('game.declaring');
