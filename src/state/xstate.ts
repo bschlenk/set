@@ -34,8 +34,9 @@ type EventType<T extends string, U extends {} = {}> = { type: T } & U;
 type DeclareEvent = EventType<'DECLARE'>;
 type AddCardEvent = EventType<'ADD_CARD', { card: Card }>;
 type RemoveCardEvent = EventType<'REMOVE_CARD', { card: Card }>;
+type NoSetsEvent = EventType<'NO_SETS'>;
 
-type Event = DeclareEvent | AddCardEvent | RemoveCardEvent;
+type Event = DeclareEvent | AddCardEvent | RemoveCardEvent | NoSetsEvent;
 
 interface Context {
   deck: Card[];
@@ -70,6 +71,9 @@ export const machineConfig: MachineConfig<Context, Schema, Event> = {
           onEntry: ['setIdle'],
           on: {
             DECLARE: 'declaring',
+            NO_SETS: {
+              actions: ['noSets'],
+            },
           },
         },
         declaring: {
@@ -174,6 +178,16 @@ export const machineOptions: MachineOptions<Context, Event> = {
 
     resetTimer: assign<Context>({
       countdown: () => SECONDS_TO_CHOOSE,
+    }),
+
+    noSets: assign<Context>(ctx => {
+      const [drawn, deck] = drawCards(ctx.deck, 3);
+      const board = [...ctx.board, ...drawn];
+      return {
+        ...ctx,
+        board,
+        deck,
+      };
     }),
 
     updateBoard: assign<Context>(ctx => {

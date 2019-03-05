@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ReactComponent as CardIcon } from './images/cards.svg';
 import { Board } from './components/Board';
 import { Button } from './components/Button';
 import { Card } from './model/card';
 import { useSetMachine } from './state/useSetMachine';
 import { TimerButton } from './components/TimerButton';
-import './App.css';
+import './App.scss';
 
 const instructions = (
   <a href="http://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf">
@@ -14,6 +15,7 @@ const instructions = (
 
 export function App() {
   const machine = useSetMachine();
+  const [addCardsCooldown, setAddCardsCooldown] = useState(false);
 
   const { board, declaredCards, sets, countdown } = machine.context;
   const declaring = machine.state.matches('game.declaring');
@@ -30,16 +32,35 @@ export function App() {
     }
   };
 
+  const addCards = () => {
+    machine.send({ type: 'NO_SETS' });
+    setAddCardsCooldown(true);
+    setTimeout(() => {
+      setAddCardsCooldown(false);
+    }, 3000);
+  };
+
   return (
     <div className="App">
       <Board cards={board} selected={declaredCards} onClick={handleClick} />
-      {declaring ? (
-        <TimerButton disabled time={countdown}>
-          Click the cards!
-        </TimerButton>
-      ) : (
-        <Button onClick={handleDeclare}>Set!</Button>
-      )}
+      <div className="Controls">
+        {declaring ? (
+          <TimerButton disabled time={countdown}>
+            Click the cards!
+          </TimerButton>
+        ) : (
+          <>
+            <Button onClick={handleDeclare}>Set!</Button>
+            <Button
+              title="Add 3 more cards"
+              onClick={addCards}
+              disabled={addCardsCooldown}
+            >
+              <CardIcon />
+            </Button>
+          </>
+        )}
+      </div>
       <span>Score: {sets.length}</span>
     </div>
   );
