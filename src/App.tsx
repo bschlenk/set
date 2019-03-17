@@ -50,7 +50,12 @@ export function App() {
           </TimerButton>
         ) : (
           <>
-            <Button onClick={handleDeclare}>Set!</Button>
+            <Button
+              title="Declare that you have found a set"
+              onClick={handleDeclare}
+            >
+              Set!
+            </Button>
             <Button
               title="Add 3 more cards"
               onClick={addCards}
