@@ -1,5 +1,4 @@
-import { useMachine } from 'use-machine';
-import { machineConfig, machineOptions, initialContext } from './xstate';
+import { useMachine } from '@xstate/react';
+import { setMachine } from './xstate';
 
-export const useSetMachine = () =>
-  useMachine(machineConfig, machineOptions, initialContext);
+export const useSetMachine = () => useMachine(setMachine);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ReactComponent as CardIcon } from './images/cards.svg';
 import { Board } from './components/Board';
 import { Button } from './components/Button';
@@ -14,26 +14,26 @@ const instructions = (
 );
 
 export function App() {
-  const machine = useSetMachine();
+  const [state, send] = useSetMachine();
   const [addCardsCooldown, setAddCardsCooldown] = useState(false);
 
-  const { board, declaredCards, sets, countdown } = machine.context;
-  const declaring = machine.state.matches('game.declaring');
+  const { board, declaredCards, sets, countdown } = state.context;
+  const declaring = state.matches('game.declaring');
 
-  const handleDeclare = () => machine.send('DECLARE');
+  const handleDeclare = () => send('DECLARE');
 
   const handleClick = (card: Card) => {
     if (declaring) {
       if (declaredCards.includes(card)) {
-        machine.send({ type: 'REMOVE_CARD', card });
+        send({ type: 'REMOVE_CARD', card });
       } else {
-        machine.send({ type: 'ADD_CARD', card });
+        send({ type: 'ADD_CARD', card });
       }
     }
   };
 
   const addCards = () => {
-    machine.send({ type: 'NO_SETS' });
+    send({ type: 'NO_SETS' });
     setAddCardsCooldown(true);
     setTimeout(() => {
       setAddCardsCooldown(false);
